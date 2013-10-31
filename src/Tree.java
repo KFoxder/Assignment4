@@ -124,26 +124,29 @@ public class Tree<T extends TreeNode> {
 		// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		// Hint: Begin with the following:
 		
+		//Check if it is root and print opening XML tag
+		if(this.parent==null) System.out.println("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>");
 		
-		System.out.println("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>");
-		displayXMLChild(0);
-
-
-
-
-
-
-	}
-	public void displayXMLChild(int Indent){
+		//Create Indent by checking to see how many parent it has and increasing the Indent 
+		int Indent = 0;
+		Tree<T> parentNode = this.parent;
+		while(parentNode!=null){
+			Indent+=3;
+			parentNode = parentNode.parent;
+		}
+		
+		
 		for (int I = 0; I < Indent; I++) System.out.print(" ");
 		System.out.println(this.label.preString());
 		Tree<T> node = this.firstChild;
+		
 		while(node!=null){
-			node.displayXMLChild(Indent+3);
+			node.displayXML();
 			node = node.nextSibling;
 		}
 		for (int I = 0; I < Indent; I++) System.out.print(" ");
 		System.out.println(this.label.postString());
+		
 
 	}
 
