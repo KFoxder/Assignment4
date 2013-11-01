@@ -47,8 +47,14 @@ public class Tree<T extends TreeNode> {
 	public Tree<T> getFirstChild() { return firstChild;}
 
 	/**
-	 * findChild: searches through the *immediate* children of the tree
+	 * findChild(): searches through the *immediate* children of the tree
 	 * to see if there is a subtree N whose label is equal to {@link otherLabel}.
+	 *
+	 * @param otherLabel      The label to search for within the current Tree's
+	 *                        children. Must not be a null value.
+	 * @return 				  Returns a Tree<T> if it finds a child that has the 
+	 * 						  same label as {@link otherLabel}. Returns null if it doesn't
+	 * 						  find a child with the same label as {@link otherLabel}.
 	 */
 	public Tree<T> findChild(T otherLabel) {
 
@@ -66,12 +72,7 @@ public class Tree<T extends TreeNode> {
 				}
 			}
 			return null;
-			
-
 		}
-
-
-
 	}
 
 	/**
@@ -110,23 +111,9 @@ public class Tree<T extends TreeNode> {
 	 */
 	public void displayXML() {
 
-		// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-		// Implement this method.  Hint: You will need to do a
-		// combination of pre-Order and post-Order. That is, at each
-		// level you will need to call the label's "preString()"
-		// method before any recursive calls and then call the
-		// label's "postString()" method afterward. preString() and
-		// postString() have already been implemented for you in
-		// FileNode.java.
-		//
-		// IMPORTANT: make sure you use indenting, increasing the
-		// indent by 3 at each new level.
-		// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-		// Hint: Begin with the following:
-		
 		//Check if it is root and print opening XML tag
 		if(this.parent==null) System.out.println("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>");
-		
+
 		//Create Indent by checking to see how many parent it has and increasing the Indent 
 		int Indent = 0;
 		Tree<T> parentNode = this.parent;
@@ -134,19 +121,22 @@ public class Tree<T extends TreeNode> {
 			Indent+=3;
 			parentNode = parentNode.parent;
 		}
-		
-		
+
+		//Print the preString() 
 		for (int I = 0; I < Indent; I++) System.out.print(" ");
 		System.out.println(this.label.preString());
 		Tree<T> node = this.firstChild;
 		
+		//Recursively call .displayXML() on all children of the node
 		while(node!=null){
-			node.displayXML();
+			node.displayXML();			
 			node = node.nextSibling;
 		}
+
+		//Print the postString()
 		for (int I = 0; I < Indent; I++) System.out.print(" ");
 		System.out.println(this.label.postString());
-		
+
 
 	}
 

@@ -35,35 +35,35 @@ public class FileSystem {
 	 */
 	public void insertPath(Tree<FileNode> t, QueueList<String> filePathQueue) {
 
-		// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-		// Implement this method. Hint: You will need to use
-		// recursion, at each step dequeuing the next path and then
-		// searching to see if the directory already exists.
-		// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
 		while(!filePathQueue.isEmpty()){
 			String name;
 			try {
-				// Get the name of the top in the queue
+				
+				// Dequeue the name off the queue  and create a FileNode
 				name = filePathQueue.dequeue();
 				FileNode temp = new FileNode(name,true);
 
-				//if its empty we change it to a file
+				//if the queue is empty we know its a file and thus change the FileNode.isDir to false
 				if(filePathQueue.isEmpty()){
 					temp.isDir = false;
 				}
 
+				//Create a Tree node with the FileNode
 				Tree<FileNode> tempNode = new Tree<FileNode>(temp);
+				
+				//Search the current tree node to see if the dir/file exists
 				Tree<FileNode> nodeFound = t.findChild(temp);
+				
+				//If the current tree node doesn't have the file/dir we add it as a child and recurse
+				//otherwise we use the node that is found and continue with the recursion.
 				if(nodeFound==null){
 					t.addChild(tempNode);
 					insertPath(tempNode,filePathQueue);
 				}else{
 					insertPath(nodeFound,filePathQueue);
 				}
-				
-				
+
+
 
 			} catch (InvalidOperationException e) {
 				// TODO Auto-generated catch block
@@ -74,6 +74,9 @@ public class FileSystem {
 		}
 
 	}
+	/**
+	 * Calls displayXML() on {@link root}. 
+	 */
 
 	public void display() {
 		root.displayXML();
